@@ -5359,7 +5359,9 @@ function simulateTime(seconds, real) {
 
     //the game is simulated at a 50ms update rate, with a max of 1000 ticks
     //warning: do not call this function with real unless you know what you're doing
+    if(seconds >= 60){
     document.getElementById("offlineprogress").style.display = "block"
+    }
     var ticks = seconds * 20;
     var bonusDiff = 0;
     var playerStart = Object.assign({}, player);
@@ -5373,6 +5375,7 @@ function simulateTime(seconds, real) {
         autoBuyerTick();
         if (real) console.log(ticksDone)
     }
+    if(seconds >= 60){
     var popupString = "While you were away"
     if (player.money.gt(playerStart.money)) popupString+= ",<br> your antimatter increased "+shortenMoney(player.money.log10() - (playerStart.money).log10())+" orders of magnitude"
     if (player.infinityPower.gt(playerStart.infinityPower)) popupString+= ",<br> infinity power increased "+shortenMoney(player.infinityPower.log10() - (Decimal.max(playerStart.infinityPower, 1)).log10())+" orders of magnitude"
@@ -5388,6 +5391,7 @@ function simulateTime(seconds, real) {
     }
 
     document.getElementById("offlinePopup").innerHTML = popupString
+    }
 }
 
 function startInterval() {
@@ -5965,3 +5969,6 @@ setInterval( function() {
         ec10bonus = new Decimal(1)
     }
 }, 100)
+setInterval(function(){
+    simulateTime(2)
+},10)
